@@ -1,0 +1,500 @@
+  100  echo 'starting...'
+  101  ./boot2docker.exe start
+  102  #!/bin/bash
+  103  trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
+  104  #Quick Hack: used to convert e.g. "C:\Program Files\Docker Toolbox" to "/c/Program Files/Docker Toolbox"
+  105  win_to_unix_path(){  	wd="$(pwd)"; 	cd "$1"; 		the_path="$(pwd)"; 	cd "$wd"; 	echo $the_path; }
+  106  # This is needed  to ensure that binaries provided
+  107  # by Docker Toolbox over-ride binaries provided by
+  108  # Docker for Windows when launching using the Quickstart.
+  109  export PATH="$(win_to_unix_path "${DOCKER_TOOLBOX_INSTALL_PATH}"):$PATH"
+  110  VM=${DOCKER_MACHINE_NAME-default}
+  111  DOCKER_MACHINE="${DOCKER_TOOLBOX_INSTALL_PATH}\docker-machine.exe"
+  112  STEP="Looking for vboxmanage.exe"
+  113  if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then   VBOXMANAGE="${VBOX_MSI_INSTALL_PATH}VBoxManage.exe"; else   VBOXMANAGE="${VBOX_INSTALL_PATH}VBoxManage.exe"; fi
+  114  BLUE='\033[1;34m'
+  115  GREEN='\033[0;32m'
+  116  NC='\033[0m'
+  117  #clear all_proxy if not socks address
+  118  if  [[ $ALL_PROXY != socks* ]]; then   unset ALL_PROXY; fi
+  119  if  [[ $all_proxy != socks* ]]; then   unset all_proxy; fi
+  120  if [ ! -f "${DOCKER_MACHINE}" ]; then   echo "Docker Machine is not installed. Please re-run the Toolbox Installer and try again.";   exit 1; fi
+  121  if [ ! -f "${VBOXMANAGE}" ]; then   echo "VirtualBox is not installed. Please re-run the Toolbox Installer and try again.";   exit 1; fi
+  122  "${VBOXMANAGE}" list vms | grep \""${VM}"\" &> /dev/null
+  123  VM_EXISTS_CODE=$?
+  124  set -e
+  125  STEP="Checking if machine $VM exists"
+  126  if [ $VM_EXISTS_CODE -eq 1 ]; then   "${DOCKER_MACHINE}" rm -f "${VM}" &> /dev/null || :;   rm -rf ~/.docker/machine/machines/"${VM}"   if [ "${HTTP_PROXY}" ]; then     PROXY_ENV="$PROXY_ENV --engine-env HTTP_PROXY=$HTTP_PROXY";   fi;   if [ "${HTTPS_PROXY}" ]; then     PROXY_ENV="$PROXY_ENV --engine-env HTTPS_PROXY=$HTTPS_PROXY";   fi;   if [ "${NO_PROXY}" ]; then     PROXY_ENV="$PROXY_ENV --engine-env NO_PROXY=$NO_PROXY";   fi;   "${DOCKER_MACHINE}" create -d virtualbox $PROXY_ENV "${VM}"; fi
+  127  STEP="Checking status on $VM"
+  128  VM_STATUS="$( set +e ; "${DOCKER_MACHINE}" status "${VM}" )"
+  129  #!/bin/bash
+  130  set -e
+  131  # clear the MSYS MOTD
+  132  clear
+  133  cd "$(dirname "$BASH_SOURCE")"
+  134  ISO="$HOME/.boot2docker/boot2docker.iso"
+  135  if [ ! -e "$ISO" ]; then 	echo 'copying initial boot2docker.iso (run "boot2docker.exe download" to update)'; 	mkdir -p "$(dirname "$ISO")"; 	cp ./boot2docker.iso "$ISO"; fi
+  136  echo 'initializing...'
+  137  ./boot2docker.exe init
+  138  echo
+  139  echo 'starting...'
+  140  ./boot2docker.exe start
+  141  #!/bin/bash
+  142  set -e
+  143  # clear the MSYS MOTD
+  144  clear
+  145  cd "$(dirname "$BASH_SOURCE")"
+  146  ISO="$HOME/.boot2docker/boot2docker.iso"
+  147  if [ ! -e "$ISO" ]; then 	echo 'copying initial boot2docker.iso (run "boot2docker.exe download" to update)'; 	mkdir -p "$(dirname "$ISO")"; 	cp ./boot2docker.iso "$ISO"; fi
+  148  echo 'initializing...'
+  149  ./boot2docker.exe init
+  150  echo
+  151  echo 'starting...'
+  152  ./boot2docker.exe start
+  153  #!/bin/bash
+  154  set -e
+  155  # clear the MSYS MOTD
+  156  clear
+  157  cd "$(dirname "$BASH_SOURCE")"
+  158  ISO="$HOME/.boot2docker/boot2docker.iso"
+  159  if [ ! -e "$ISO" ]; then 	echo 'copying initial boot2docker.iso (run "boot2docker.exe download" to update)'; 	mkdir -p "$(dirname "$ISO")"; 	cp ./boot2docker.iso "$ISO"; fi
+  160  echo 'initializing...'
+  161  ./boot2docker.exe init
+  162  echo
+  163  echo 'starting...'
+  164  ./boot2docker.exe start
+  165  #!/bin/bash
+  166  trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
+  167  #Quick Hack: used to convert e.g. "C:\Program Files\Docker Toolbox" to "/c/Program Files/Docker Toolbox"
+  168  win_to_unix_path(){  	wd="$(pwd)"; 	cd "$1"; 		the_path="$(pwd)"; 	cd "$wd"; 	echo $the_path; }
+  169  # This is needed  to ensure that binaries provided
+  170  # by Docker Toolbox over-ride binaries provided by
+  171  # Docker for Windows when launching using the Quickstart.
+  172  export PATH="$(win_to_unix_path "${DOCKER_TOOLBOX_INSTALL_PATH}"):$PATH"
+  173  VM=${DOCKER_MACHINE_NAME-default}
+  174  DOCKER_MACHINE="${DOCKER_TOOLBOX_INSTALL_PATH}\docker-machine.exe"
+  175  STEP="Looking for vboxmanage.exe"
+  176  if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then   VBOXMANAGE="${VBOX_MSI_INSTALL_PATH}VBoxManage.exe"; else   VBOXMANAGE="${VBOX_INSTALL_PATH}VBoxManage.exe"; fi
+  177  BLUE='\033[1;34m'
+  178  GREEN='\033[0;32m'
+  179  NC='\033[0m'
+  180  #clear all_proxy if not socks address
+  181  if  [[ $ALL_PROXY != socks* ]]; then   unset ALL_PROXY; fi
+  182  if  [[ $all_proxy != socks* ]]; then   unset all_proxy; fi
+  183  if [ ! -f "${DOCKER_MACHINE}" ]; then   echo "Docker Machine is not installed. Please re-run the Toolbox Installer and try again.";   exit 1; fi
+  184  if [ ! -f "${VBOXMANAGE}" ]; then   echo "VirtualBox is not installed. Please re-run the Toolbox Installer and try again.";   exit 1; fi
+  185  "${VBOXMANAGE}" list vms | grep \""${VM}"\" &> /dev/null
+  186  VM_EXISTS_CODE=$?
+  187  set -e
+  188  STEP="Checking if machine $VM exists"
+  189  if [ $VM_EXISTS_CODE -eq 1 ]; then   "${DOCKER_MACHINE}" rm -f "${VM}" &> /dev/null || :;   rm -rf ~/.docker/machine/machines/"${VM}"   if [ "${HTTP_PROXY}" ]; then     PROXY_ENV="$PROXY_ENV --engine-env HTTP_PROXY=$HTTP_PROXY";   fi;   if [ "${HTTPS_PROXY}" ]; then     PROXY_ENV="$PROXY_ENV --engine-env HTTPS_PROXY=$HTTPS_PROXY";   fi;   if [ "${NO_PROXY}" ]; then     PROXY_ENV="$PROXY_ENV --engine-env NO_PROXY=$NO_PROXY";   fi;   "${DOCKER_MACHINE}" create -d virtualbox $PROXY_ENV "${VM}"; fi
+  190  STEP="Checking status on $VM"
+  191  VM_STATUS="$( set +e ; "${DOCKER_MACHINE}" status "${VM}" )"
+  192  #!/bin/bash
+  193  set -e
+  194  # clear the MSYS MOTD
+  195  clear
+  196  cd "$(dirname "$BASH_SOURCE")"
+  197  ISO="$HOME/.boot2docker/boot2docker.iso"
+  198  if [ ! -e "$ISO" ]; then 	echo 'copying initial boot2docker.iso (run "boot2docker.exe download" to update)'; 	mkdir -p "$(dirname "$ISO")"; 	cp ./boot2docker.iso "$ISO"; fi
+  199  echo 'initializing...'
+  200  ./boot2docker.exe init
+  201  echo
+  202  echo 'starting...'
+  203  ./boot2docker.exe start
+  204  #!/bin/bash
+  205  set -e
+  206  # clear the MSYS MOTD
+  207  clear
+  208  cd "$(dirname "$BASH_SOURCE")"
+  209  ISO="$HOME/.boot2docker/boot2docker.iso"
+  210  if [ ! -e "$ISO" ]; then 	echo 'copying initial boot2docker.iso (run "boot2docker.exe download" to update)'; 	mkdir -p "$(dirname "$ISO")"; 	cp ./boot2docker.iso "$ISO"; fi
+  211  echo 'initializing...'
+  212  ./boot2docker.exe init
+  213  echo
+  214  echo 'starting...'
+  215  ./boot2docker.exe start
+  216  #!/bin/bash
+  217  set -e
+  218  # clear the MSYS MOTD
+  219  clear
+  220  cd "$(dirname "$BASH_SOURCE")"
+  221  ISO="$HOME/.boot2docker/boot2docker.iso"
+  222  if [ ! -e "$ISO" ]; then 	echo 'copying initial boot2docker.iso (run "boot2docker.exe download" to update)'; 	mkdir -p "$(dirname "$ISO")"; 	cp ./boot2docker.iso "$ISO"; fi
+  223  echo 'initializing...'
+  224  ./boot2docker.exe init
+  225  echo
+  226  echo 'starting...'
+  227  ./boot2docker.exe start
+  228  #!/bin/bash
+  229  set -e
+  230  # clear the MSYS MOTD
+  231  clear
+  232  cd "$(dirname "$BASH_SOURCE")"
+  233  ISO="$HOME/.boot2docker/boot2docker.iso"
+  234  if [ ! -e "$ISO" ]; then 	echo 'copying initial boot2docker.iso (run "boot2docker.exe download" to update)'; 	mkdir -p "$(dirname "$ISO")"; 	cp ./boot2docker.iso "$ISO"; fi
+  235  echo 'initializing...'
+  236  ./boot2docker.exe init
+  237  echo
+  238  echo 'starting...'
+  239  ./boot2docker.exe start
+  240  #!/bin/bash
+  241  set -e
+  242  # clear the MSYS MOTD
+  243  clear
+  244  cd "$(dirname "$BASH_SOURCE")"
+  245  ISO="$HOME/.boot2docker/boot2docker.iso"
+  246  if [ ! -e "$ISO" ]; then 	echo 'copying initial boot2docker.iso (run "boot2docker.exe download" to update)'; 	mkdir -p "$(dirname "$ISO")"; 	cp ./boot2docker.iso "$ISO"; fi
+  247  echo 'initializing...'
+  248  ./boot2docker.exe init
+  249  echo
+  250  echo 'starting...'
+  251  ./boot2docker.exe start
+  252  pwd
+  253  ls
+  254  chmod 400 Docker.pem 
+  255  ssh -i "Docker.pem" ec2-user@ec2-35-172-135-44.compute-1.amazonaws.com
+  256  ssh -i "Docker.pem" ec2-user@ec2-35-172-135-44.compute-1.amazonaws.com
+  257  ssh -i "Docker.pem" ec2-user@ec2-35-172-135-44.compute-1.amazonaws.com
+  258  ssh -i "Docker.pem" ec2-user@ec2-35-172-135-44.compute-1.amazonaws.com
+  259  chmod 400 AnsibleCM.pem
+  260  ssh -i "AnsibleCM.pem" ec2-user@ec2-34-228-217-162.compute-1.amazonaws.com
+  261  ssh -i "AnsibleCM.pem"
+  262  clear
+  263  chmod 400 AnsibleCM.pem
+  264  ssh -i "AnsibleCM.pem" ec2-user@ec2-35-172-141-180.compute-1.amazonaws.com
+  265  ssh -i "AnsibleCM.pem" lhokeswar@ec2-34-228-217-162.compute-1.amazonaws.com
+  266  ssh -i "AnsibleCM.pem" ec2-user@ec2-34-228-217-162.compute-1.amazonaws.com
+  267  ssh -i "AnsibleCM.pem" lhokeswar@ec2-34-228-217-162.compute-1.amazonaws.com
+  268  ssh -i "AnsibleSession.pem" ec2-user@ec2-54-175-47-239.compute-1.amazonaws.com
+  269  ssh -i "AnsibleSession.pem" lhokeswar@ec2-54-175-47-239.compute-1.amazonaws.com
+  270  ssh -i "AnsibleSession.pem" lhokeswar@ec2-54-175-47-239.compute-1.amazonaws.com
+  271  chmod 400 AnsibleSession.pem 
+  272  ssh -i "AnsibleSession.pem" ec2-user@ec2-18-212-158-253.compute-1.amazonaws.com
+  273  ssh -i "AnsibleSession.pem" lhokeswar@ec2-18-212-158-253.compute-1.amazonaws.com
+  274  ssh -i "AnsibleSession.pem" lhokeswar@ec2-54-175-47-239.compute-1.amazonaws.com
+  275  ssh -i "AnsibleSession.pem" lhokeswar@ec2-54-175-47-239.compute-1.amazonaws.com
+  276  ssh -i "AnsibleSession.pem" ec2-user@ec2-54-89-96-232.compute-1.amazonaws.com
+  277  ssh -i "AnsibleSession.pem" lhokeswar@ec2-54-89-96-232.compute-1.amazonaws.com
+  278  ssh -i "AnsibleSession.pem" lhokeswar@ec2-54-175-47-239.compute-1.amazonaws.com
+  279  ssh -i "AnsibleSession.pem" lhokeswar@ec2-54-175-47-239.compute-1.amazonaws.com
+  280  ssh -i "AnsibleSession.pem" lhokeswar@ec2-54-175-47-239.compute-1.amazonaws.com
+  281  ssh -i "AnsibleSession.pem" ec2-user@ec2-52-207-229-157.compute-1.amazonaws.com
+  282  ssh -i "AnsibleSession.pem" lhokeswar@ec2-52-207-229-157.compute-1.amazonaws.com
+  283  git init
+  284  git remote add origin "https://github.com/lreddyn/CDProcess.git"
+  285  sudo git init
+  286  git init
+  287  git remote add origin "https://github.com/lreddyn/mvn_nexus.git"
+  288  git pull origin master
+  289  git add *
+  290  git commit -a -m "nexus repo"
+  291  git push origin master
+  292  ssh -i "Docker.pem" ec2-user@ec2-18-234-165-120.compute-1.amazonaws.com
+  293  chmod 400 Docker.pem
+  294  ssh -i "Docker.pem" ec2-user@ec2-18-234-165-120.compute-1.amazonaws.com
+  295  ssh -i "Docker.pem" ec2-user@ec2-18-212-41-78.compute-1.amazonaws.com
+  296  ssh -i "Docker.pem" ec2-user@ec2-18-234-165-120.compute-1.amazonaws.com
+  297  ssh -i "Docker.pem" ec2-user@ec2-18-234-165-120.compute-1.amazonaws.com
+  298  ssh -i "Docker.pem" ec2-user@ec2-18-212-41-78.compute-1.amazonaws.com
+  299  ssh -i "Docker.pem" ec2-user@ec2-18-212-41-78.compute-1.amazonaws.com
+  300  ssh -i "Docker.pem" ec2-user@ec2-18-212-41-78.compute-1.amazonaws.com
+  301  pwd
+  302  mkdir ec2
+  303  ssh -i "ec2server.pem" ec2-user@ec2-184-73-18-187.compute-1.amazonaws.com
+  304  chmod 400 RHEL_GIT.pem
+  305  ssh -i "RHEL_GIT.pem" ec2-user@ec2-18-216-247-73.us-east-2.compute.amazonaws.com
+  306  #!/bin/bash
+  307  # ---------------------------config------------------------------
+  308  RED='\033[1;31m'
+  309  BLUE='\033[1;34m'
+  310  PURPLE='\033[1;35m'
+  311  CYAN='\033[1;36m'
+  312  YELLOW='\033[1;33m'
+  313  NC='\033[0m'
+  314  # ----------------------------------------------------------------
+  315  function Http-Server { 	yum update -y ; 	 	yum install httpd -y; 	 	service httpd start; 	 	service httpd status; }
+  316  function Git {              		     echo "Update server"; 		     yum update -y ; 		     echo "Updating server done"; 		     echo "Install Git"; 		     yum install git -y; 		     echo "Check git version"; 		     git --version	; 	     }
+  317  function Java {             	    sudo yum install -y java-1.8.0-openjdk-devel -y; 	     	    sudo update-alternatives --config java; 	     	    java -version; 	       	      }
+  318  function Maven {              			 	    wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo; 	    sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo; 	    yum install -y apache-maven -y; 	    sudo update-alternatives --config java; 	    mvn --version	; 	        	       }
+  319  	       
+  320  function Tomcat { 	 	       	yum update -y;              		cd /opt; 		 		yum install wget -y; 		 		wget http://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.37/bin/apache-tomcat-8.5.37.tar.gz; 		 		tar -xvzf /opt/apache-tomcat-8.5.37.tar.gz; 		 		chmod +x /opt/apache-tomcat-8.5.37/bin/startup.sh; 		 		chmod +x /opt/apache-tomcat-8.5.37/bin/shutdown.sh; 		 		ln -s /opt/apache-tomcat-8.5.37/bin/startup.sh /usr/local/bin/tomcatup; 		 		ln -s /opt/apache-tomcat-8.5.37/bin/shutdown.sh /usr/local/bin/tomcatdown; 		 		vi /opt/apache-tomcat-8.5.37/conf/server.xml; 		 		vi /opt/apache-tomcat-8.5.37/conf/tomcat-user.xml; 		 		/opt/apache-tomcat-8.5.37/start.sh; 	 	        }	       
+  321  	       
+  322  function Jenkins { 	 	yum update -y;  	sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat/jenkins.repo;  	sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key; 	 	sudo yum install jenkins -y; 	 	sudo service jenkins start; 	 	sudo service jenkins status; 	 	         }
+  323  	       
+  324  function Docker { 	yum update -y; 	yum install docker -y; 	sudo service docker start; 	 	docker --version; 	 	docker -version ;  }	       
+  325  function Ansible { 	yum update -y;  	sudo yum-config-manager --enable epel; 	yum install epel-release -y; 	yum install git python python-devel python-pip openssl ansible -y; 	yum install ansible -y; 	yum repolist; 	yum install epel-release -y; 	 	ansible --version;  }
+  326  printf "\n${YELLOW}.................................................................................................................................................................................${NC}\n"
+  327  printf "${CYAN}Select Tool to install: ${NC}\n"
+  328  PS3='Please enter your choice: '
+  329  options=("GIT" "MAVEN" "JAVA" "TOMCAT" "HTTP-SERVER" "JENKINS" "DOCKER" "ANSIBLE" "Quit" )
+  330  select opt in "${options[@]}"; do     case $opt in              "GIT") 	    Git;             break ;; 	         "JAVA") 	    Java; 	    break ;; 			     "MAVEN")             Maven		; 	    break ;; 	     "HTTP-SERVER")	 	    Http-Server; 	    break ;;     "TOMCAT") 	Tomcat; 	break ;;	     	         "JENKINS") 	    Jenkins; 	    break ;;	    	         "DOCKER") 	    Docker; 	    break;;	 	         "ANSIBLE") 	    Ansible; 	    break;;	    	         	     		          "Quit") 			printf "\n${RED}Am Smart , Don't Play with me ${NC}\n";             break ;;         *) echo invalid option;;     esac; done
+  331  ssh -i "jenkins.pem" ec2-user@ec2-3-87-204-12.compute-1.amazonaws.com
+  332  ssh -i "jenkins.pem" ec2-user@ec2-3-87-204-12.compute-1.amazonaws.com
+  333  ssh -i "jenkins.pem" ec2-user@ec2-3-87-204-12.compute-1.amazonaws.com
+  334  ssh -i "jenkins.pem" ec2-user@ec2-3-83-218-162.compute-1.amazonaws.com
+  335  ssh -i "jenkins.pem" ec2-user@ec2-3-83-218-162.compute-1.amazonaws.com
+  336  ssh -i "jenkins.pem" ec2-user@ec2-3-87-204-12.compute-1.amazonaws.com
+  337  ssh -i "jenkins.pem" ec2-user@ec2-3-87-204-12.compute-1.amazonaws.com
+  338  ssh -i "jenkins.pem" ec2-user@ec2-3-87-204-12.compute-1.amazonaws.com
+  339  ssh -i "jenkins.pem" ec2-user@ec2-3-83-218-162.compute-1.amazonaws.com
+  340  ssh -i "jenkins.pem" ec2-user@ec2-3-87-204-12.compute-1.amazonaws.com
+  341  ssh -i "jenkins.pem" ec2-user@ec2-3-87-204-12.compute-1.amazonaws.com
+  342  ssh -i "ansible.pem" ec2-user@ec2-54-165-154-206.compute-1.amazonaws.com
+  343  ssh -i "ansible.pem" ansible@ec2-54-165-154-206.compute-1.amazonaws.com
+  344  ssh -i "ansible.pem" ec2-user@ec2-54-165-154-206.compute-1.amazonaws.com
+  345  ssh -i "t1.pem" ec2-user@ec2-3-80-133-15.compute-1.amazonaws.com
+  346  ls
+  347  pwd
+  348  clear
+  349  pwd
+  350  ls -al
+  351  git --version
+  352  git 
+  353  git branch --help
+  354  clear
+  355  ls -ltr
+  356  ls -al
+  357  rm git.sh
+  358  ls
+  359  ls -al;
+  360  clear
+  361  ls -al
+  362  git init
+  363  git --help | grep init
+  364  ls -al
+  365  cd .git
+  366  ls
+  367  cat config 
+  368  cd ..
+  369  clear
+  370  history 10
+  371  git remote add origin "https://github.com/lreddyn/CDProcess.git"
+  372  cat .git/config 
+  373  clear
+  374  cat .git/config 
+  375  git pull origin 
+  376  ls -al
+  377  git pull origin master
+  378  git status
+  379  touch git
+  380  git status
+  381  git add .
+  382  git status
+  383  history
+  384  ls -al
+  385  cd .git
+  386  ls
+  387  cat HEAD 
+  388  cat FETCH_HEAD 
+  389  clear
+  390  cd ..
+  391  git status
+  392  git commit -m "git file added"
+  393  git status
+  394  git push origin master
+  395  git log --oneline
+  396  touch git_checkout
+  397  git add >
+  398  git add .
+  399  git commit -m "checkout demo"
+  400  git ststus
+  401  git status
+  402  git log --oneline
+  403  vio git_checkout 
+  404  vi git_checkout 
+  405  git add .
+  406  git commit -m "git checkout file edited"
+  407  git log --oneline
+  408  git checkout 8e29ff0
+  409  git status
+  410  git log --oneline
+  411  git log --oneline git_checkout
+  412  git branch
+  413  git checkout master
+  414  ls
+  415  git log --oneline pom.xml
+  416  cd .git
+  417  ls
+  418  history
+  419  ls
+  420  cd hooks
+  421  ls
+  422  cd ..
+  423  cat config 
+  424  git pull origin master
+  425  cd ..
+  426  git pull origin master
+  427  cd .git/hooks/
+  428  ls
+  429  git rev-parse --abbrev-ref HEAD
+  430  ls
+  431  cp commit-msg.sample commit-msg
+  432  LS
+  433  CHMOD +X commit-msg
+  434  CHMOD +x commit-msg
+  435  vi commit-msg
+  436  cat commit-msg
+  437  vi commit-msg
+  438  cat commit-msg
+  439  cd ../..
+  440  ls
+  441  touch commit4
+  442  git add .
+  443  git commit -m "vertion-1234"
+  444  vi .git/hooks/commit-msg
+  445  git commit -m "vertion-1234"
+  446  git status
+  447  git commit -m "version-1234"
+  448  git status
+  449  ls
+  450  cd .git
+  451  ls
+  452  cd hooks
+  453  ls
+  454  vi commit-msg
+  455  cd ../..
+  456  mkdir git_hooks
+  457  cd git_hooks/
+  458  ls
+  459  git init
+  460  cd ..
+  461  ls
+  462  git status
+  463  ls -al
+  464  git config --list | grep commit
+  465  git config --list
+  466  git push origin master
+  467  git add */.*
+  468  git status
+  469  git push
+  470  git push origin master
+  471  git pull origin master
+  472  git push -u origin  master
+  473  cd .git/hooks/
+  474  ls
+  475  cd ..
+  476  ls
+  477  cdd hooks/
+  478  cd hooks/
+  479  ls
+  480  cat pre-push.sample 
+  481  git log -1
+  482  git log -1 | wc -l
+  483  git log -1 | wc 
+  484  git rev-parse --abbrev-ref HEAD
+  485  git worktree
+  486  git worktree list
+  487  git gui
+  488  git log --graph --pretty=oneline --abbrev-commit
+  489  git wtf
+  490  git show-branch --list
+  491  git lgb
+  492  git lfs
+  493  git lg2
+  494  git branch tree
+  495  cd ../..
+  496  ls
+  497  git branch
+  498  git branch --help
+  499  git branch --colour
+  500  git gui
+  501  git status
+  502  touch reset
+  503  git status
+  504  git reset --help
+  505  git reset
+  506  git status
+  507  git add .
+  508  git status
+  509  git reset
+  510  git status
+  511  touch reset_file
+  512  git status
+  513  git add reset_file 
+  514  git status
+  515  git reset
+  516  git status
+  517  git add reset_file 
+  518  git status
+  519  git reset --hard
+  520  git status
+  521  git log --oneline -4
+  522  git status
+  523  git add .
+  524  git status
+  525  git log --oneline -4
+  526  git reset --hard
+  527  git status
+  528  git log --oneline -4
+  529  touch soft 
+  530  git add .
+  531  git reset --soft
+  532  git status
+  533  git log --oneline
+  534  git reset --hard c9eeed9
+  535  git log --oneline
+  536  git status
+  537  git reset fb9d3f1
+  538  git log --oneline
+  539  git status
+  540  ls
+  541  git log --oneline --all
+  542  git log --oneline 
+  543  git log --oneline --all
+  544  git reset 4ee05c1
+  545  git log --oneline --all
+  546  git reset 8828f06
+  547  git log --oneline --all
+  548  git status
+  549  ls
+  550  git add .
+  551  git status
+  552  git log --oneline 
+  553  git reset 5c472d9
+  554  git status
+  555  it log --oneline --all
+  556  git log --oneline --all
+  557  git reset --hard b3ddd76
+  558  it log --oneline --all
+  559  git log --oneline --all
+  560  git status
+  561  ls
+  562  cat commit
+  563  caT commit1 
+  564  caT commit1 
+  565  GIT LOG --ONELINE
+  566  git log --oneline
+  567  git log --oneline --all
+  568  git revert 827cb9f
+  569  git status
+  570  git log --oneline --all
+  571  ls
+  572  git rm demo 
+  573  git rm commit
+  574  git status
+  575  rm demo
+  576  ls
+  577  git status
+  578  git log --oneline
+  579  git checkout b3ddd76
+  580  git status
+  581  git reset --hard b3ddd76
+  582  git status
+  583  ls
+  584  git checkout master
+  585  ls
+  586  git pull origin master
+  587  git status
+  588  git rm commit-msg commit4 
+  589  git status
+  590  git rm -f commit-msg commit4 
+  591  git status
+  592  git commit -m "file deleted"
+  593  git commit -m "version-999"
+  594  git status
+  595  ls
+  596  git log --oneline --all
+  597  git log 8828f06
+  598  git log | grep ver
+  599  history > history.txt
